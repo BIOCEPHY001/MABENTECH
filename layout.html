@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="MABENTECH – Global Premium Laptop & Accessories Store. Shop the world's best laptops, ultrabooks, gaming laptops, and accessories."/>
+    <meta name="keywords" content="laptops, MacBook, Dell XPS, gaming laptop, laptop accessories, MABENTECH"/>
+    <meta property="og:title" content="MABENTECH – The Future of Laptops"/>
+    <meta property="og:description" content="Premium laptops and accessories, delivered globally."/>
+    <meta property="og:type" content="website"/>
+    <title>MABENTECH – The Future of Laptops</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet"/>
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <!-- Main CSS -->
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <th:block th:replace="${extraHead}"></th:block>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <div class="topbar-inner">
+        <span><i class="fas fa-shipping-fast"></i> Free global shipping on orders over $500</span>
+        <div class="topbar-right">
+            <span><i class="fas fa-lock"></i> Secure checkout</span>
+            <span class="separator">|</span>
+            <span><i class="fas fa-headset"></i> 24/7 Support</span>
+            <span class="separator">|</span>
+            <span><i class="fas fa-globe"></i> Global Delivery</span>
+        </div>
+    </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <!-- Logo -->
+        <a href="/" class="nav-logo">
+            <div class="logo-icon"><i class="fas fa-microchip"></i></div>
+            <div class="logo-text">
+                <span class="logo-name">MABENTECH</span>
+                <span class="logo-tagline">The Future of Laptops</span>
+            </div>
+        </a>
+
+        <!-- Search -->
+        <div class="nav-search">
+            <form action="/shop" method="GET" class="search-form">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" name="q" placeholder="Search laptops, brands, accessories..."
+                       id="navSearch" autocomplete="off"/>
+                <button type="submit" class="search-btn">Search</button>
+            </form>
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+
+        <!-- Nav Links -->
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <div class="nav-dropdown">
+                <a href="/shop" class="nav-link">Shop <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-col">
+                        <div class="dropdown-title">Laptops</div>
+                        <a href="/shop?category=laptop" class="dropdown-link"><i class="fas fa-laptop"></i> All Laptops</a>
+                        <a href="/shop?category=laptop&sub=gaming" class="dropdown-link"><i class="fas fa-gamepad"></i> Gaming Laptops</a>
+                        <a href="/shop?category=laptop&sub=business" class="dropdown-link"><i class="fas fa-briefcase"></i> Business Laptops</a>
+                        <a href="/shop?category=laptop&sub=ultrabook" class="dropdown-link"><i class="fas fa-feather"></i> Ultrabooks</a>
+                        <a href="/shop?category=laptop&sub=workstation" class="dropdown-link"><i class="fas fa-desktop"></i> Workstations</a>
+                    </div>
+                    <div class="dropdown-col">
+                        <div class="dropdown-title">Accessories</div>
+                        <a href="/shop?category=accessory" class="dropdown-link"><i class="fas fa-keyboard"></i> All Accessories</a>
+                        <a href="/shop?category=accessory&sub=keyboard" class="dropdown-link"><i class="fas fa-keyboard"></i> Keyboards</a>
+                        <a href="/shop?category=accessory&sub=mouse" class="dropdown-link"><i class="fas fa-mouse"></i> Mice</a>
+                        <a href="/shop?category=accessory&sub=monitor" class="dropdown-link"><i class="fas fa-tv"></i> Monitors</a>
+                        <a href="/shop?category=accessory&sub=dock" class="dropdown-link"><i class="fas fa-plug"></i> Docks & Hubs</a>
+                    </div>
+                    <div class="dropdown-col">
+                        <div class="dropdown-title">Top Brands</div>
+                        <a href="/shop?q=apple" class="dropdown-link brand-link">Apple</a>
+                        <a href="/shop?q=dell" class="dropdown-link brand-link">Dell</a>
+                        <a href="/shop?q=lenovo" class="dropdown-link brand-link">Lenovo</a>
+                        <a href="/shop?q=asus" class="dropdown-link brand-link">ASUS</a>
+                        <a href="/shop?q=hp" class="dropdown-link brand-link">HP</a>
+                    </div>
+                </div>
+            </div>
+            <a href="/about" class="nav-link">About</a>
+            <a href="/contact" class="nav-link">Contact</a>
+        </div>
+
+        <!-- Nav Actions -->
+        <div class="nav-actions">
+            <div sec:authorize="isAuthenticated()" class="nav-user-menu">
+                <button class="nav-icon-btn" title="My Account">
+                    <i class="fas fa-user"></i>
+                    <span class="nav-icon-label">Account</span>
+                </button>
+            </div>
+            <div sec:authorize="isAnonymous()">
+                <a href="/login" class="nav-icon-btn" title="Sign In">
+                    <i class="fas fa-user"></i>
+                    <span class="nav-icon-label">Sign In</span>
+                </a>
+            </div>
+            <button class="nav-icon-btn" title="Wishlist" onclick="toggleWishlist()">
+                <i class="far fa-heart"></i>
+                <span class="nav-badge" id="wishBadge" style="display:none">0</span>
+                <span class="nav-icon-label">Wishlist</span>
+            </button>
+            <button class="nav-icon-btn cart-trigger" title="Cart" onclick="toggleCart()">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="nav-badge cart-badge" id="cartBadge" style="display:none">0</span>
+                <span class="nav-icon-label">Cart</span>
+            </button>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+        <a href="/" class="mobile-link">Home</a>
+        <a href="/shop" class="mobile-link">All Products</a>
+        <a href="/shop?category=laptop" class="mobile-link">Laptops</a>
+        <a href="/shop?category=accessory" class="mobile-link">Accessories</a>
+        <a href="/about" class="mobile-link">About</a>
+        <a href="/contact" class="mobile-link">Contact</a>
+        <div class="mobile-divider"></div>
+        <a href="/login" class="mobile-link" sec:authorize="isAnonymous()">Sign In</a>
+        <a href="/register" class="mobile-link" sec:authorize="isAnonymous()">Create Account</a>
+    </div>
+</div>
+
+<!-- PAGE CONTENT -->
+<main>
+    <th:block th:replace="${content}"></th:block>
+</main>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay" onclick="closeDrawers()"></div>
+<div class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+        <h3>Shopping Cart <span id="cartItemCount" class="drawer-count"></span></h3>
+        <button class="drawer-close" onclick="closeDrawers()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="drawer-body" id="cartDrawerBody"></div>
+    <div class="drawer-footer" id="cartDrawerFooter"></div>
+</div>
+
+<!-- WISHLIST DRAWER -->
+<div class="wish-drawer" id="wishDrawer">
+    <div class="drawer-header">
+        <h3>Wishlist</h3>
+        <button class="drawer-close" onclick="closeDrawers()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="drawer-body" id="wishDrawerBody"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-main">
+        <div class="footer-brand">
+            <div class="footer-logo">
+                <div class="logo-icon"><i class="fas fa-microchip"></i></div>
+                <span>MABENTECH</span>
+            </div>
+            <p class="footer-desc">The world's premier destination for premium laptops and accessories. Trusted by professionals, creators, and gamers across 180+ countries.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            </div>
+        </div>
+        <div class="footer-links-grid">
+            <div class="footer-col">
+                <h4>Shop</h4>
+                <a href="/shop?category=laptop">All Laptops</a>
+                <a href="/shop?category=laptop&sub=gaming">Gaming Laptops</a>
+                <a href="/shop?category=laptop&sub=business">Business Laptops</a>
+                <a href="/shop?category=laptop&sub=ultrabook">Ultrabooks</a>
+                <a href="/shop?category=accessory">Accessories</a>
+            </div>
+            <div class="footer-col">
+                <h4>Brands</h4>
+                <a href="/shop?q=apple">Apple</a>
+                <a href="/shop?q=dell">Dell</a>
+                <a href="/shop?q=lenovo">Lenovo</a>
+                <a href="/shop?q=asus">ASUS</a>
+                <a href="/shop?q=hp">HP</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="/contact">Contact Us</a>
+                <a href="#">Shipping Policy</a>
+                <a href="#">Returns & Refunds</a>
+                <a href="#">Warranty Info</a>
+                <a href="#">Track Order</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="/about">About Us</a>
+                <a href="#">Careers</a>
+                <a href="#">Press Kit</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 MABENTECH Global Ltd. All rights reserved. Built with Spring Boot &amp; Java.</p>
+        <div class="footer-payments">
+            <i class="fab fa-cc-visa" title="Visa"></i>
+            <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+            <i class="fab fa-cc-amex" title="Amex"></i>
+            <i class="fab fa-cc-paypal" title="PayPal"></i>
+            <i class="fab fa-apple-pay" title="Apple Pay"></i>
+            <i class="fab fa-google-pay" title="Google Pay"></i>
+        </div>
+    </div>
+</footer>
+
+<script th:src="@{/js/main.js}"></script>
+<th:block th:replace="${extraScripts}"></th:block>
+</body>
+</html>

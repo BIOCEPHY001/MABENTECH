@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(content=~{::main-content}, extraHead=~{::extra-head}, extraScripts=~{::extra-scripts})}">
+<head><th:block th:fragment="extra-head"><title>Checkout – MABENTECH</title></th:block></head>
+<body>
+<th:block th:fragment="main-content">
+<div class="page-header">
+    <div class="page-header-inner">
+        <div class="breadcrumb">
+            <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+            <a href="/cart">Cart</a><span class="breadcrumb-sep">›</span>
+            <span>Checkout</span>
+        </div>
+        <h1>Secure Checkout</h1>
+    </div>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:2.5rem 1.5rem;display:grid;grid-template-columns:1fr 380px;gap:2rem;align-items:start">
+    <!-- LEFT: Form -->
+    <div>
+        <!-- Steps -->
+        <div style="display:flex;align-items:center;gap:0;margin-bottom:2rem">
+            <div class="checkout-step active" id="step1">
+                <span class="step-num">1</span><span class="step-label">Shipping</span>
+            </div>
+            <div class="step-line" id="line1"></div>
+            <div class="checkout-step" id="step2">
+                <span class="step-num">2</span><span class="step-label">Payment</span>
+            </div>
+            <div class="step-line" id="line2"></div>
+            <div class="checkout-step" id="step3">
+                <span class="step-num">3</span><span class="step-label">Confirm</span>
+            </div>
+        </div>
+
+        <!-- Step 1: Shipping -->
+        <div id="formStep1">
+            <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;margin-bottom:1rem">
+                <h3 style="margin-bottom:1.25rem;font-size:1rem;display:flex;align-items:center;gap:.5rem">
+                    <i class="fas fa-shipping-fast" style="color:var(--accent)"></i> Shipping Information
+                </h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+                    <div class="form-group"><label class="form-label">First Name</label><input class="form-input" type="text" id="shFname" placeholder="John" required/></div>
+                    <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" type="text" id="shLname" placeholder="Doe" required/></div>
+                </div>
+                <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" id="shEmail" placeholder="you@example.com" required/></div>
+                <div class="form-group"><label class="form-label">Phone</label><input class="form-input" type="tel" id="shPhone" placeholder="+1 234 567 8900"/></div>
+                <div class="form-group"><label class="form-label">Address</label><input class="form-input" type="text" id="shAddr" placeholder="123 Tech Street" required/></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+                    <div class="form-group"><label class="form-label">City</label><input class="form-input" type="text" id="shCity" placeholder="San Francisco" required/></div>
+                    <div class="form-group"><label class="form-label">ZIP / Postal</label><input class="form-input" type="text" id="shZip" placeholder="94102"/></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Country</label>
+                    <select class="form-input" id="shCountry">
+                        <option>United States</option><option>United Kingdom</option>
+                        <option>Nigeria</option><option>Canada</option><option>Australia</option>
+                        <option>Germany</option><option>France</option><option>India</option>
+                        <option>Japan</option><option>Singapore</option><option>UAE</option>
+                        <option>South Africa</option><option>Brazil</option><option>Other</option>
+                    </select>
+                </div>
+            </div>
+            <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;margin-bottom:1.25rem">
+                <h3 style="margin-bottom:1rem;font-size:1rem;display:flex;align-items:center;gap:.5rem">
+                    <i class="fas fa-truck" style="color:var(--accent)"></i> Shipping Method
+                </h3>
+                <div style="display:flex;flex-direction:column;gap:.6rem">
+                    <label style="display:flex;align-items:center;gap:1rem;background:var(--surface2);border:1.5px solid var(--accent);border-radius:var(--radius-md);padding:1rem;cursor:pointer">
+                        <input type="radio" name="shipping" value="standard" checked style="accent-color:var(--accent)"/>
+                        <div style="flex:1"><div style="font-weight:600;font-size:.9rem">Standard Global Shipping</div><div style="font-size:.8rem;color:var(--text3)">7-14 business days</div></div>
+                        <span style="font-weight:700;color:var(--accent3)">Free</span>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:1rem;background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius-md);padding:1rem;cursor:pointer">
+                        <input type="radio" name="shipping" value="express" style="accent-color:var(--accent)"/>
+                        <div style="flex:1"><div style="font-weight:600;font-size:.9rem">Express Shipping</div><div style="font-size:.8rem;color:var(--text3)">3-5 business days</div></div>
+                        <span style="font-weight:700">$29.99</span>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:1rem;background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius-md);padding:1rem;cursor:pointer">
+                        <input type="radio" name="shipping" value="overnight" style="accent-color:var(--accent)"/>
+                        <div style="flex:1"><div style="font-weight:600;font-size:.9rem">Overnight Delivery</div><div style="font-size:.8rem;color:var(--text3)">Next business day</div></div>
+                        <span style="font-weight:700">$59.99</span>
+                    </label>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-lg btn-full" onclick="goToStep(2)">
+                Continue to Payment <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- Step 2: Payment -->
+        <div id="formStep2" style="display:none">
+            <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;margin-bottom:1rem">
+                <h3 style="margin-bottom:1.25rem;font-size:1rem;display:flex;align-items:center;gap:.5rem">
+                    <i class="fas fa-credit-card" style="color:var(--accent)"></i> Payment Details
+                </h3>
+                <div style="display:flex;gap:.5rem;margin-bottom:1.25rem">
+                    <button class="btn btn-outline btn-sm active" onclick="setPayMethod(this,'card')"><i class="fas fa-credit-card"></i> Card</button>
+                    <button class="btn btn-outline btn-sm" onclick="setPayMethod(this,'paypal')"><i class="fab fa-paypal"></i> PayPal</button>
+                    <button class="btn btn-outline btn-sm" onclick="setPayMethod(this,'crypto')"><i class="fab fa-bitcoin"></i> Crypto</button>
+                </div>
+                <div id="cardFields">
+                    <div class="form-group">
+                        <label class="form-label">Name on Card</label>
+                        <input class="form-input" type="text" placeholder="John Doe"/>
+                    </div>
+                    <div class="form-group" style="position:relative">
+                        <label class="form-label">Card Number</label>
+                        <input class="form-input" type="text" id="cardNum" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)"/>
+                        <div style="position:absolute;right:.85rem;top:2.35rem;display:flex;gap:.3rem;font-size:1.2rem;color:var(--text3)">
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-mastercard"></i>
+                        </div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+                        <div class="form-group">
+                            <label class="form-label">Expiry Date</label>
+                            <input class="form-input" type="text" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)"/>
+                        </div>
+                        <div class="form-group" style="position:relative">
+                            <label class="form-label">CVV</label>
+                            <input class="form-input" type="password" placeholder="•••" maxlength="4"/>
+                            <i class="fas fa-question-circle" style="position:absolute;right:.85rem;top:2.35rem;color:var(--text3);cursor:help" title="3-4 digit security code on back of card"></i>
+                        </div>
+                    </div>
+                </div>
+                <div id="paypalFields" style="display:none;text-align:center;padding:2rem">
+                    <i class="fab fa-paypal" style="font-size:3rem;color:#003087;margin-bottom:1rem;display:block"></i>
+                    <p style="color:var(--text2);font-size:.9rem">You'll be redirected to PayPal to complete your purchase securely.</p>
+                </div>
+                <div id="cryptoFields" style="display:none;text-align:center;padding:2rem">
+                    <i class="fab fa-bitcoin" style="font-size:3rem;color:#f7931a;margin-bottom:1rem;display:block"></i>
+                    <p style="color:var(--text2);font-size:.9rem">Pay with BTC, ETH, or USDC. Address will be provided after order confirmation.</p>
+                </div>
+                <div style="display:flex;align-items:center;gap:.5rem;margin-top:1rem;padding:.75rem;background:rgba(0,212,161,.06);border:1px solid rgba(0,212,161,.2);border-radius:var(--radius-sm)">
+                    <i class="fas fa-lock" style="color:var(--accent3)"></i>
+                    <span style="font-size:.8rem;color:var(--text2)">Your payment is encrypted with AES-256-bit SSL security</span>
+                </div>
+            </div>
+            <div style="display:flex;gap:.75rem">
+                <button class="btn btn-outline btn-lg" onclick="goToStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+                <button class="btn btn-primary btn-lg" style="flex:1;justify-content:center" onclick="goToStep(3)">
+                    Review Order <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 3: Confirm -->
+        <div id="formStep3" style="display:none">
+            <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;margin-bottom:1rem">
+                <h3 style="margin-bottom:1.25rem;font-size:1rem">Order Review</h3>
+                <div id="confirmItems" style="margin-bottom:1rem"></div>
+                <div style="padding:1rem;background:var(--surface2);border-radius:var(--radius-md)">
+                    <div id="confirmTotals"></div>
+                </div>
+            </div>
+            <div style="display:flex;gap:.75rem">
+                <button class="btn btn-outline btn-lg" onclick="goToStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+                <button class="btn btn-primary btn-lg" style="flex:1;justify-content:center" onclick="placeOrder()">
+                    <i class="fas fa-lock"></i> Place Order
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 4: Success -->
+        <div id="formSuccess" style="display:none;text-align:center;padding:3rem;background:var(--surface);border:1.5px solid rgba(0,212,161,.3);border-radius:var(--radius-xl)">
+            <div style="width:72px;height:72px;background:rgba(0,212,161,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:2rem;color:var(--accent3)">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2 style="margin-bottom:.5rem">Order Placed!</h2>
+            <p style="color:var(--text2);margin-bottom.75rem" id="orderNumDisplay"></p>
+            <p style="color:var(--text2);font-size:.9rem;margin-bottom:1.75rem">A confirmation email has been sent. Your laptop will be shipped within 24 hours.</p>
+            <div style="display:flex;gap:.75rem;justify-content:center">
+                <a href="/" class="btn btn-outline">Back to Home</a>
+                <a href="/shop" class="btn btn-primary">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: Order Summary -->
+    <div id="checkoutSummary" style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;position:sticky;top:90px"></div>
+</div>
+</th:block>
+<th:block th:fragment="extra-scripts">
+<style>
+.checkout-step{display:flex;flex-direction:column;align-items:center;gap:.3rem;flex:1;max-width:100px}
+.step-num{width:32px;height:32px;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--text3);transition:all .3s;background:var(--surface2)}
+.step-label{font-size:.7rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;transition:color .3s}
+.checkout-step.active .step-num{background:var(--accent);border-color:var(--accent);color:#fff}
+.checkout-step.active .step-label{color:var(--accent)}
+.checkout-step.done .step-num{background:var(--accent3);border-color:var(--accent3);color:#fff}
+.step-line{flex:1;height:2px;background:var(--border2);transition:background .3s;margin-bottom:1.1rem}
+.step-line.done{background:var(--accent3)}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', renderCheckoutSummary);
+
+function renderCheckoutSummary() {
+    const cart = JSON.parse(localStorage.getItem('mbt_cart') || '[]');
+    const el = document.getElementById('checkoutSummary');
+    if (!el) return;
+    const subtotal = cart.reduce((s,i) => s+i.price*i.qty, 0);
+    const shipping = subtotal>=500?0:29.99;
+    const tax = subtotal * 0.07;
+    const total = subtotal + shipping + tax;
+    el.innerHTML = `
+        <h3 style="margin-bottom:1.25rem;font-size:1rem">Your Order (${cart.reduce((s,i)=>s+i.qty,0)} items)</h3>
+        ${cart.map(i=>`
+        <div style="display:flex;gap:.75rem;align-items:center;margin-bottom:.85rem;padding-bottom:.85rem;border-bottom:1px solid var(--border)">
+            <div style="width:42px;height:42px;background:var(--surface2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0">💻</div>
+            <div style="flex:1;min-width:0">
+                <div style="font-size:.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${i.name}</div>
+                <div style="font-size:.75rem;color:var(--text3)">Qty: ${i.qty}</div>
+            </div>
+            <div style="font-weight:700;font-size:.9rem;flex-shrink:0">$${(i.price*i.qty).toFixed(2)}</div>
+        </div>`).join('')}
+        <div style="display:flex;justify-content:space-between;font-size:.85rem;color:var(--text2);margin-bottom:.5rem"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.85rem;color:var(--text2);margin-bottom:.5rem"><span>Shipping</span><span>${shipping===0?'<span style="color:var(--accent3)">Free</span>':'$'+shipping.toFixed(2)}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.85rem;color:var(--text2);margin-bottom:.75rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)"><span>Tax (7%)</span><span>$${tax.toFixed(2)}</span></div>
+        <div style="display:flex;justify-content:space-between;font-weight:800;font-size:1.1rem"><span>Total</span><span>$${total.toFixed(2)}</span></div>`;
+}
+
+function goToStep(n) {
+    [1,2,3].forEach(i => {
+        document.getElementById(`formStep${i}`).style.display = i===n?'block':'none';
+        const s = document.getElementById(`step${i}`);
+        s.classList.remove('active','done');
+        if (i===n) s.classList.add('active');
+        else if (i<n) s.classList.add('done');
+        if (i < 3) {
+            const l = document.getElementById(`line${i}`);
+            l.classList.toggle('done', i < n);
+        }
+    });
+    if (n===3) renderConfirmStep();
+}
+
+function renderConfirmStep() {
+    const cart = JSON.parse(localStorage.getItem('mbt_cart') || '[]');
+    document.getElementById('confirmItems').innerHTML = cart.map(i=>`
+        <div style="display:flex;gap:.75rem;margin-bottom:.6rem;font-size:.875rem">
+            <span>💻</span><span style="flex:1">${i.name} × ${i.qty}</span>
+            <span style="font-weight:600">$${(i.price*i.qty).toFixed(2)}</span>
+        </div>`).join('');
+    const sub = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    const ship = sub>=500?0:29.99;
+    const tax = sub*0.07;
+    document.getElementById('confirmTotals').innerHTML = `
+        <div style="display:flex;justify-content:space-between;font-size:.875rem;color:var(--text2);margin-bottom:.4rem"><span>Subtotal</span><span>$${sub.toFixed(2)}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.875rem;color:var(--text2);margin-bottom:.4rem"><span>Shipping</span><span>${ship===0?'Free':'$'+ship.toFixed(2)}</span></div>
+        <div style="display:flex;justify-content:space-between;font-weight:800;font-size:1rem;padding-top:.5rem;border-top:1px solid var(--border)"><span>Total</span><span>$${(sub+ship+tax).toFixed(2)}</span></div>`;
+}
+
+function setPayMethod(btn, method) {
+    document.querySelectorAll('[onclick^="setPayMethod"]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    ['cardFields','paypalFields','cryptoFields'].forEach(id => document.getElementById(id).style.display='none');
+    document.getElementById(method+'Fields').style.display='block';
+}
+
+function formatCard(inp) {
+    let v = inp.value.replace(/\D/g,'').substring(0,16);
+    inp.value = v.replace(/(.{4})/g,'$1 ').trim();
+}
+function formatExpiry(inp) {
+    let v = inp.value.replace(/\D/g,'');
+    if (v.length>=2) v = v.substring(0,2)+' / '+v.substring(2,4);
+    inp.value = v;
+}
+
+function placeOrder() {
+    const orderNum = 'MBT-' + Date.now();
+    localStorage.removeItem('mbt_cart');
+    [1,2,3].forEach(i => document.getElementById(`formStep${i}`).style.display='none');
+    document.getElementById('formSuccess').style.display='block';
+    document.getElementById('orderNumDisplay').textContent = 'Order #' + orderNum;
+    document.getElementById('checkoutSummary').style.display='none';
+    updateBadges();
+}
+</script>
+</th:block>
+</body>
+</html>

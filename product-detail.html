@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(content=~{::main-content}, extraHead=~{::extra-head}, extraScripts=~{::extra-scripts})}">
+<head>
+    <th:block th:fragment="extra-head">
+        <title th:text="${product.name + ' – MABENTECH'}">Product – MABENTECH</title>
+    </th:block>
+</head>
+<body>
+<th:block th:fragment="main-content">
+
+<div class="page-header">
+    <div class="page-header-inner">
+        <div class="breadcrumb">
+            <a href="/">Home</a><span class="breadcrumb-sep">›</span>
+            <a href="/shop">Shop</a><span class="breadcrumb-sep">›</span>
+            <a th:href="@{'/shop?category=' + ${product.category}}" th:text="${#strings.capitalize(product.category)}">Laptop</a>
+            <span class="breadcrumb-sep">›</span>
+            <span th:text="${product.name}">Product</span>
+        </div>
+    </div>
+</div>
+
+<div class="product-detail-layout">
+    <div class="product-detail-grid">
+        <!-- Image -->
+        <div>
+            <div class="product-detail-img">
+                <span th:text="${
+                    product.category == 'laptop' ? '💻' :
+                    product.subcategory == 'keyboard' ? '⌨️' :
+                    product.subcategory == 'mouse' ? '🖱️' :
+                    product.subcategory == 'monitor' ? '🖥️' :
+                    product.subcategory == 'storage' ? '💾' :
+                    product.subcategory == 'dock' ? '🔌' :
+                    product.subcategory == 'bag' ? '👜' :
+                    product.subcategory == 'charger' ? '⚡' : '🔧'
+                }" style="font-size:9rem"></span>
+                <div class="product-badge"
+                     th:if="${product.badge != null}"
+                     th:classappend="${'badge-' + #strings.toLowerCase(product.badge)}"
+                     th:text="${product.badge}"
+                     style="position:absolute;top:1rem;left:1rem;font-size:.75rem;padding:.3rem .85rem"></div>
+            </div>
+            <!-- Thumbnails placeholder -->
+            <div style="display:flex;gap:.75rem;margin-top:1rem">
+                <div th:each="i : ${#numbers.sequence(1,4)}"
+                     style="flex:1;height:70px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer;transition:border-color .2s"
+                     onmouseover="this.style.borderColor='var(--accent)'"
+                     onmouseout="this.style.borderColor='var(--border)'">
+                    💻
+                </div>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="product-detail-info">
+            <div class="product-detail-brand" th:text="${product.brand}">Brand</div>
+            <h1 class="product-detail-name" th:text="${product.name}">Product Name</h1>
+
+            <!-- Rating -->
+            <div class="product-detail-rating">
+                <div class="stars-wrap" style="width:90px;height:16px">
+                    <div class="stars-fill" th:style="'width:' + ${product.rating * 20} + '%'"></div>
+                </div>
+                <span style="font-size:.9rem;font-weight:600" th:text="${product.rating}">4.9</span>
+                <span style="color:var(--text3);font-size:.85rem" th:text="'(' + ${product.reviewCount} + ' reviews)'"></span>
+                <span th:if="${product.stock > 10}" class="stock-badge stock-in"><i class="fas fa-check-circle"></i> In Stock</span>
+                <span th:if="${product.stock <= 10 and product.stock > 0}" class="stock-badge stock-low"><i class="fas fa-exclamation-circle"></i> Only <span th:text="${product.stock}"></span> left</span>
+                <span th:if="${product.stock == 0}" class="stock-badge stock-out"><i class="fas fa-times-circle"></i> Out of Stock</span>
+            </div>
+
+            <!-- Price -->
+            <div class="product-detail-price">
+                <span class="price-current" th:text="'$' + ${product.price}">$1,299</span>
+                <div th:if="${product.oldPrice != null}" style="display:flex;align-items:center;gap:.5rem;margin-top:.25rem">
+                    <span class="price-old" th:text="'$' + ${product.oldPrice}">$1,499</span>
+                    <span class="discount-badge" th:text="'Save ' + ${#numbers.formatDecimal((1 - product.price.doubleValue() / product.oldPrice.doubleValue()) * 100, 0, 0)} + '%'">Save 13%</span>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <p class="product-detail-desc" th:text="${product.description}">Description here.</p>
+
+            <!-- Actions -->
+            <div class="product-detail-actions">
+                <button class="btn btn-primary btn-lg btn-add-cart"
+                        th:attr="onclick='addToCart(' + ${product.id} + ', \'' + ${#strings.replace(product.name, '\'', '\\\'')} + '\', ' + ${product.price} + ', \'' + ${product.brand} + '\')'">
+                    <i class="fas fa-shopping-bag"></i> Add to Cart
+                </button>
+                <button class="btn btn-outline btn-lg"
+                        th:attr="onclick='toggleWishItem(' + ${product.id} + ')'">
+                    <i class="far fa-heart"></i> Wishlist
+                </button>
+            </div>
+
+            <!-- Trust badges -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1.5rem">
+                <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius-md);padding:.75rem 1rem;display:flex;align-items:center;gap:.6rem;font-size:.8rem;color:var(--text2)">
+                    <i class="fas fa-shield-alt" style="color:var(--accent3)"></i> 2-Year Warranty
+                </div>
+                <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius-md);padding:.75rem 1rem;display:flex;align-items:center;gap:.6rem;font-size:.8rem;color:var(--text2)">
+                    <i class="fas fa-undo" style="color:var(--accent)"></i> 30-Day Returns
+                </div>
+                <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius-md);padding:.75rem 1rem;display:flex;align-items:center;gap:.6rem;font-size:.8rem;color:var(--text2)">
+                    <i class="fas fa-shipping-fast" style="color:var(--yellow)"></i> Global Shipping
+                </div>
+                <div style="background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius-md);padding:.75rem 1rem;display:flex;align-items:center;gap:.6rem;font-size:.8rem;color:var(--text2)">
+                    <i class="fas fa-lock" style="color:var(--accent2)"></i> Secure Checkout
+                </div>
+            </div>
+
+            <!-- Specs -->
+            <div th:if="${product.specs != null and !#strings.isEmpty(product.specs)}">
+                <h3 style="font-size:.9rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:1rem">Specifications</h3>
+                <div class="specs-grid" id="specsGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RELATED PRODUCTS -->
+    <div th:if="${!#lists.isEmpty(related)}">
+        <div class="section-header">
+            <div>
+                <div class="section-eyebrow">You May Also Like</div>
+                <h2 class="section-title">Related Products</h2>
+            </div>
+            <a th:href="@{'/shop?category=' + ${product.category}}" class="btn btn-ghost">
+                View All <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="product-grid">
+            <div th:each="rel : ${related}" class="product-card" th:attr="data-id=${rel.id}">
+                <div class="product-img">
+                    <div class="product-emoji" th:text="${rel.category == 'laptop' ? '💻' : (rel.subcategory == 'keyboard' ? '⌨️' : (rel.subcategory == 'mouse' ? '🖱️' : (rel.subcategory == 'monitor' ? '🖥️' : '🔧')))}">💻</div>
+                    <div class="product-badge"
+                         th:if="${rel.badge != null}"
+                         th:classappend="${'badge-' + #strings.toLowerCase(rel.badge)}"
+                         th:text="${rel.badge}"></div>
+                </div>
+                <div class="product-body">
+                    <div class="product-brand" th:text="${rel.brand}">Brand</div>
+                    <h3 class="product-name">
+                        <a th:href="@{'/product/' + ${rel.id}}" th:text="${rel.name}">Name</a>
+                    </h3>
+                    <div class="product-rating">
+                        <div class="stars-wrap"><div class="stars-fill" th:style="'width:' + ${rel.rating * 20} + '%'"></div></div>
+                        <span th:text="${rel.rating}">4.8</span>
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            <span class="price-current" th:text="'$' + ${rel.price}">$999</span>
+                        </div>
+                        <button class="add-to-cart-btn"
+                                th:attr="onclick='addToCart(' + ${rel.id} + ', \'' + ${#strings.replace(rel.name, '\'', '\\\'')} + '\', ' + ${rel.price} + ', \'' + ${rel.brand} + '\')'">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</th:block>
+
+<th:block th:fragment="extra-scripts">
+<script th:inline="javascript">
+const specs = /*[[${product.specs}]]*/ '{}';
+try {
+    const obj = JSON.parse(specs);
+    const grid = document.getElementById('specsGrid');
+    if (grid) {
+        grid.innerHTML = Object.entries(obj).map(([k, v]) => `
+            <div class="spec-item">
+                <div class="spec-key">${k.replace(/_/g,' ')}</div>
+                <div class="spec-val">${v}</div>
+            </div>`).join('');
+    }
+} catch(e) {}
+</script>
+</th:block>
+</body>
+</html>

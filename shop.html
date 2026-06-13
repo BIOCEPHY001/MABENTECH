@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(content=~{::main-content}, extraHead=~{::extra-head}, extraScripts=~{::extra-scripts})}">
+<head>
+    <th:block th:fragment="extra-head">
+        <title>Shop – MABENTECH</title>
+    </th:block>
+</head>
+<body>
+<th:block th:fragment="main-content">
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <div class="page-header-inner">
+        <div class="breadcrumb">
+            <a href="/">Home</a>
+            <span class="breadcrumb-sep">›</span>
+            <span>Shop</span>
+            <span class="breadcrumb-sep" th:if="${activeCategory != null}">›</span>
+            <span th:if="${activeCategory != null}" th:text="${activeCategory}"></span>
+        </div>
+        <h1 th:text="${searchQuery != null ? 'Search: ' + searchQuery : (activeCategory != null ? #strings.capitalize(activeCategory) + 's' : 'All Products')}">All Products</h1>
+    </div>
+</div>
+
+<div class="shop-layout">
+    <!-- SIDEBAR FILTERS -->
+    <aside class="shop-filters">
+        <div class="filter-section">
+            <div class="filter-title">Category</div>
+            <div class="filter-chip-wrap">
+                <a href="/shop" th:classappend="${activeCategory == null and searchQuery == null ? 'active' : ''}" class="filter-chip">All</a>
+                <a href="/shop?category=laptop" th:classappend="${activeCategory == 'laptop' ? 'active' : ''}" class="filter-chip">Laptops</a>
+                <a href="/shop?category=accessory" th:classappend="${activeCategory == 'accessory' ? 'active' : ''}" class="filter-chip">Accessories</a>
+            </div>
+        </div>
+        <div class="filter-section">
+            <div class="filter-title">Laptop Type</div>
+            <div class="filter-chip-wrap">
+                <a href="/shop?q=gaming" class="filter-chip">Gaming</a>
+                <a href="/shop?q=business" class="filter-chip">Business</a>
+                <a href="/shop?q=ultrabook" class="filter-chip">Ultrabook</a>
+                <a href="/shop?q=workstation" class="filter-chip">Workstation</a>
+            </div>
+        </div>
+        <div class="filter-section">
+            <div class="filter-title">Brand</div>
+            <div class="filter-chip-wrap">
+                <a href="/shop?q=apple" class="filter-chip">Apple</a>
+                <a href="/shop?q=dell" class="filter-chip">Dell</a>
+                <a href="/shop?q=lenovo" class="filter-chip">Lenovo</a>
+                <a href="/shop?q=asus" class="filter-chip">ASUS</a>
+                <a href="/shop?q=hp" class="filter-chip">HP</a>
+                <a href="/shop?q=microsoft" class="filter-chip">Microsoft</a>
+                <a href="/shop?q=acer" class="filter-chip">Acer</a>
+            </div>
+        </div>
+        <div class="filter-section">
+            <div class="filter-title">Accessories</div>
+            <div class="filter-chip-wrap">
+                <a href="/shop?q=keyboard" class="filter-chip">Keyboards</a>
+                <a href="/shop?q=mouse" class="filter-chip">Mice</a>
+                <a href="/shop?q=monitor" class="filter-chip">Monitors</a>
+                <a href="/shop?q=dock" class="filter-chip">Docks</a>
+                <a href="/shop?q=storage" class="filter-chip">Storage</a>
+                <a href="/shop?q=charger" class="filter-chip">Chargers</a>
+            </div>
+        </div>
+        <div class="filter-section">
+            <div class="filter-title">Deals</div>
+            <div class="filter-chip-wrap">
+                <a href="/shop?q=sale" class="filter-chip" style="color:var(--accent2);border-color:rgba(255,77,109,.3)">🔥 On Sale</a>
+                <a href="/shop?q=new" class="filter-chip" style="color:var(--accent3);border-color:rgba(0,212,161,.3)">✨ New Arrivals</a>
+                <a href="/shop?q=bestseller" class="filter-chip" style="color:var(--yellow);border-color:rgba(255,193,7,.3)">⭐ Best Sellers</a>
+            </div>
+        </div>
+        <div style="padding-top:.5rem">
+            <a href="/shop" class="btn btn-outline btn-sm btn-full" style="justify-content:center">
+                <i class="fas fa-undo"></i> Clear Filters
+            </a>
+        </div>
+    </aside>
+
+    <!-- PRODUCT AREA -->
+    <div class="shop-main">
+        <div class="shop-header">
+            <div class="shop-count">
+                <strong th:text="${#lists.size(products)}">0</strong> products found
+                <span th:if="${searchQuery != null}"> for "<em th:text="${searchQuery}"></em>"</span>
+            </div>
+            <select class="sort-select" onchange="sortProducts(this.value)">
+                <option value="default">Sort by: Featured</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating">Top Rated</option>
+                <option value="newest">Newest</option>
+            </select>
+        </div>
+
+        <!-- No results -->
+        <div th:if="${#lists.isEmpty(products)}" class="empty-state">
+            <div style="text-align:center;padding:5rem 2rem;color:var(--text3)">
+                <i class="fas fa-search" style="font-size:3rem;margin-bottom:1rem;display:block;color:var(--surface3)"></i>
+                <h3 style="margin-bottom:.5rem;color:var(--text2)">No products found</h3>
+                <p style="margin-bottom:1.5rem">Try a different search or browse all products.</p>
+                <a href="/shop" class="btn btn-primary">Browse All Products</a>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="product-grid" id="shopGrid" th:if="${!#lists.isEmpty(products)}">
+            <div th:each="product : ${products}"
+                 class="product-card"
+                 th:attr="data-id=${product.id}, data-price=${product.price}, data-rating=${product.rating}, data-category=${product.category}">
+                <div class="product-img">
+                    <div class="product-emoji" th:text="${
+                        product.category == 'laptop' ? '💻' :
+                        product.subcategory == 'keyboard' ? '⌨️' :
+                        product.subcategory == 'mouse' ? '🖱️' :
+                        product.subcategory == 'monitor' ? '🖥️' :
+                        product.subcategory == 'storage' ? '💾' :
+                        product.subcategory == 'dock' ? '🔌' :
+                        product.subcategory == 'bag' ? '👜' :
+                        product.subcategory == 'charger' ? '⚡' : '🔧'
+                    }">💻</div>
+                    <div class="product-badge"
+                         th:if="${product.badge != null}"
+                         th:classappend="${'badge-' + #strings.toLowerCase(product.badge)}"
+                         th:text="${product.badge}">BADGE</div>
+                    <div class="product-actions">
+                        <button class="action-btn wish-btn"
+                                th:attr="onclick='toggleWishItem(' + ${product.id} + ')'"
+                                aria-label="Add to wishlist">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <a class="action-btn" th:href="@{'/product/' + ${product.id}}" aria-label="View product">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="product-body">
+                    <div class="product-brand" th:text="${product.brand}">Brand</div>
+                    <h3 class="product-name">
+                        <a th:href="@{'/product/' + ${product.id}}" th:text="${product.name}">Name</a>
+                    </h3>
+                    <div class="product-rating">
+                        <div class="stars-wrap">
+                            <div class="stars-fill" th:style="'width:' + ${product.rating * 20} + '%'"></div>
+                        </div>
+                        <span th:text="${product.rating}">4.8</span>
+                        <span class="review-count" th:text="'(' + ${product.reviewCount} + ')'"></span>
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            <span class="price-current" th:text="'$' + ${product.price}">$999</span>
+                            <span class="price-old" th:if="${product.oldPrice != null}" th:text="'$' + ${product.oldPrice}"></span>
+                        </div>
+                        <button class="add-to-cart-btn"
+                                th:attr="onclick='addToCart(' + ${product.id} + ', \'' + ${#strings.replace(product.name, '\'', '\\\'') } + '\', ' + ${product.price} + ', \'' + ${product.brand} + '\')'">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</th:block>
+
+<th:block th:fragment="extra-scripts">
+<script>
+function sortProducts(val) {
+    const grid = document.getElementById('shopGrid');
+    if (!grid) return;
+    const cards = [...grid.querySelectorAll('.product-card')];
+    cards.sort((a, b) => {
+        if (val === 'price-asc') return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+        if (val === 'price-desc') return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+        if (val === 'rating') return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+        return 0;
+    });
+    cards.forEach(c => grid.appendChild(c));
+}
+</script>
+</th:block>
+</body>
+</html>

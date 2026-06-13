@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(content=~{::main-content}, extraHead=~{::extra-head}, extraScripts=~{::extra-scripts})}">
+<head>
+    <th:block th:fragment="extra-head">
+        <title>MABENTECH – The Future of Laptops, Delivered Globally</title>
+    </th:block>
+</head>
+<body>
+<th:block th:fragment="main-content">
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg">
+        <div class="hero-grid"></div>
+        <div class="hero-glow hero-glow-1"></div>
+        <div class="hero-glow hero-glow-2"></div>
+    </div>
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-eyebrow">
+                <span class="eyebrow-dot"></span>
+                Premium Laptops &amp; Accessories
+                <span class="eyebrow-badge">Global Store</span>
+            </div>
+            <h1 class="hero-title">
+                The Future of<br/>
+                <span class="hero-gradient">Laptops</span><br/>
+                Delivered to You
+            </h1>
+            <p class="hero-subtitle">
+                Premium laptops from Apple, Dell, Lenovo, ASUS and more — curated for professionals, creators, and gamers across 180+ countries.
+            </p>
+            <div class="hero-actions">
+                <a href="/shop" class="btn btn-primary btn-lg">
+                    <i class="fas fa-laptop"></i> Shop All Laptops
+                </a>
+                <a href="/shop?category=accessory" class="btn btn-outline btn-lg">
+                    Browse Accessories
+                </a>
+            </div>
+            <div class="hero-trust">
+                <div class="trust-item"><i class="fas fa-shield-alt"></i> 2-Year Warranty</div>
+                <div class="trust-item"><i class="fas fa-undo"></i> 30-Day Returns</div>
+                <div class="trust-item"><i class="fas fa-shipping-fast"></i> Free Shipping $500+</div>
+                <div class="trust-item"><i class="fas fa-lock"></i> Secure Payments</div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-device-card featured-device">
+                <div class="device-glow"></div>
+                <div class="device-emoji">💻</div>
+                <div class="device-info">
+                    <div class="device-name">MacBook Pro M3 Max</div>
+                    <div class="device-price">From $3,999</div>
+                    <div class="device-badge bestseller">Best Seller</div>
+                </div>
+            </div>
+            <div class="hero-floating-card card-1">
+                <i class="fas fa-star text-yellow"></i>
+                <span>4.9/5 — 50k+ Reviews</span>
+            </div>
+            <div class="hero-floating-card card-2">
+                <i class="fas fa-globe text-blue"></i>
+                <span>Ships to 180+ Countries</span>
+            </div>
+        </div>
+    </div>
+    <!-- Stats Bar -->
+    <div class="hero-stats">
+        <div class="stat-item">
+            <div class="stat-number">500<span>+</span></div>
+            <div class="stat-label">Premium Products</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <div class="stat-number">180<span>+</span></div>
+            <div class="stat-label">Countries Served</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <div class="stat-number">50k<span>+</span></div>
+            <div class="stat-label">Happy Customers</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <div class="stat-number">4.9<span>★</span></div>
+            <div class="stat-label">Store Rating</div>
+        </div>
+    </div>
+</section>
+
+<!-- CATEGORY CARDS -->
+<section class="section categories-section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <div class="section-eyebrow">Browse by Type</div>
+                <h2 class="section-title">What Are You Looking For?</h2>
+            </div>
+        </div>
+        <div class="category-grid">
+            <a href="/shop?category=laptop" class="cat-card cat-card-large">
+                <div class="cat-bg cat-bg-purple"></div>
+                <div class="cat-icon-wrap"><i class="fas fa-laptop"></i></div>
+                <div class="cat-content">
+                    <h3>All Laptops</h3>
+                    <p>MacBooks, ThinkPads, XPS & more</p>
+                    <span class="cat-cta">Shop Now <i class="fas fa-arrow-right"></i></span>
+                </div>
+                <div class="cat-count-badge">8 Models</div>
+            </a>
+            <div class="cat-grid-right">
+                <a href="/shop?category=laptop&sub=gaming" class="cat-card">
+                    <div class="cat-bg cat-bg-red"></div>
+                    <div class="cat-icon-wrap small"><i class="fas fa-gamepad"></i></div>
+                    <div class="cat-content">
+                        <h3>Gaming</h3>
+                        <p>RTX 4090 · 240Hz Displays</p>
+                        <span class="cat-cta">Explore <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+                <a href="/shop?category=laptop&sub=business" class="cat-card">
+                    <div class="cat-bg cat-bg-blue"></div>
+                    <div class="cat-icon-wrap small"><i class="fas fa-briefcase"></i></div>
+                    <div class="cat-content">
+                        <h3>Business</h3>
+                        <p>ThinkPad · Surface · MIL-SPEC</p>
+                        <span class="cat-cta">Explore <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+                <a href="/shop?category=accessory" class="cat-card">
+                    <div class="cat-bg cat-bg-green"></div>
+                    <div class="cat-icon-wrap small"><i class="fas fa-keyboard"></i></div>
+                    <div class="cat-content">
+                        <h3>Accessories</h3>
+                        <p>Keyboards · Mice · Monitors</p>
+                        <span class="cat-cta">Explore <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+                <a href="/shop?category=laptop&sub=ultrabook" class="cat-card">
+                    <div class="cat-bg cat-bg-orange"></div>
+                    <div class="cat-icon-wrap small"><i class="fas fa-feather-alt"></i></div>
+                    <div class="cat-content">
+                        <h3>Ultrabooks</h3>
+                        <p>Thin · Light · Powerful</p>
+                        <span class="cat-cta">Explore <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section" id="featured">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <div class="section-eyebrow">Editor's Choice</div>
+                <h2 class="section-title">Featured Laptops</h2>
+            </div>
+            <a href="/shop" class="btn btn-ghost">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="product-grid">
+            <div th:each="product : ${featured}" class="product-card" th:attr="data-id=${product.id}">
+                <div class="product-img">
+                    <div class="product-emoji" th:text="${
+                        product.category == 'laptop' ? '💻' :
+                        product.subcategory == 'keyboard' ? '⌨️' :
+                        product.subcategory == 'mouse' ? '🖱️' :
+                        product.subcategory == 'monitor' ? '🖥️' :
+                        product.subcategory == 'storage' ? '💾' :
+                        product.subcategory == 'dock' ? '🔌' :
+                        product.subcategory == 'bag' ? '👜' :
+                        product.subcategory == 'charger' ? '⚡' : '🔧'
+                    }">💻</div>
+                    <div class="product-badge" th:if="${product.badge != null}"
+                         th:classappend="${'badge-' + #strings.toLowerCase(product.badge)}"
+                         th:text="${product.badge}">NEW</div>
+                    <div class="product-actions">
+                        <button class="action-btn wish-btn" th:attr="onclick='toggleWishItem(' + ${product.id} + ')'" aria-label="Wishlist">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <a class="action-btn" th:href="@{'/product/' + ${product.id}}" aria-label="Quick view">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="product-body">
+                    <div class="product-brand" th:text="${product.brand}">Apple</div>
+                    <h3 class="product-name">
+                        <a th:href="@{'/product/' + ${product.id}}" th:text="${product.name}">Product Name</a>
+                    </h3>
+                    <div class="product-rating">
+                        <div class="stars-wrap">
+                            <div class="stars-fill" th:style="'width:' + ${product.rating * 20} + '%'"></div>
+                        </div>
+                        <span th:text="${product.rating}">4.9</span>
+                        <span class="review-count" th:text="'(' + ${product.reviewCount} + ')'"></span>
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            <span class="price-current" th:text="'$' + ${product.price}">$1,299</span>
+                            <span class="price-old" th:if="${product.oldPrice != null}" th:text="'$' + ${product.oldPrice}"></span>
+                        </div>
+                        <button class="add-to-cart-btn"
+                                th:attr="onclick='addToCart(' + ${product.id} + ', \'' + ${product.name} + '\', ' + ${product.price} + ', \'' + ${product.brand} + '\')'">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROMO BANNER -->
+<section class="promo-banner-section">
+    <div class="container">
+        <div class="promo-banner">
+            <div class="promo-content">
+                <div class="promo-eyebrow"><i class="fas fa-bolt"></i> Flash Sale — Limited Time</div>
+                <h2>Up to 30% Off<br/>Top Laptops</h2>
+                <p>MacBooks, Dell XPS, ASUS ROG and more at unbeatable prices. Global shipping included.</p>
+                <a href="/shop?badge=SALE" class="btn btn-white">Shop Sale Items <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="promo-visual">
+                <div class="promo-device">💻</div>
+                <div class="promo-badge-card">
+                    <div class="promo-discount">30% OFF</div>
+                    <div class="promo-small">Selected models</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BESTSELLERS -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <div class="section-eyebrow">Customer Favourites</div>
+                <h2 class="section-title">Bestselling Products</h2>
+            </div>
+            <a href="/shop" class="btn btn-ghost">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="product-grid">
+            <div th:each="product : ${bestsellers}" class="product-card" th:attr="data-id=${product.id}">
+                <div class="product-img">
+                    <div class="product-emoji" th:text="${
+                        product.category == 'laptop' ? '💻' :
+                        product.subcategory == 'keyboard' ? '⌨️' :
+                        product.subcategory == 'mouse' ? '🖱️' :
+                        product.subcategory == 'monitor' ? '🖥️' :
+                        product.subcategory == 'storage' ? '💾' :
+                        product.subcategory == 'dock' ? '🔌' :
+                        product.subcategory == 'bag' ? '👜' :
+                        product.subcategory == 'charger' ? '⚡' : '🔧'
+                    }">💻</div>
+                    <div class="product-badge badge-bestseller" th:if="${product.badge == 'BESTSELLER'}">Best Seller</div>
+                    <div class="product-badge" th:if="${product.badge != 'BESTSELLER' and product.badge != null}"
+                         th:classappend="${'badge-' + #strings.toLowerCase(product.badge)}"
+                         th:text="${product.badge}">NEW</div>
+                    <div class="product-actions">
+                        <button class="action-btn" th:attr="onclick='toggleWishItem(' + ${product.id} + ')'" aria-label="Wishlist">
+                            <i class="far fa-heart"></i>
+                        </button>
+                        <a class="action-btn" th:href="@{'/product/' + ${product.id}}" aria-label="View">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="product-body">
+                    <div class="product-brand" th:text="${product.brand}">Brand</div>
+                    <h3 class="product-name">
+                        <a th:href="@{'/product/' + ${product.id}}" th:text="${product.name}">Name</a>
+                    </h3>
+                    <div class="product-rating">
+                        <div class="stars-wrap">
+                            <div class="stars-fill" th:style="'width:' + ${product.rating * 20} + '%'"></div>
+                        </div>
+                        <span th:text="${product.rating}">4.8</span>
+                        <span class="review-count" th:text="'(' + ${product.reviewCount} + ')'"></span>
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">
+                            <span class="price-current" th:text="'$' + ${product.price}">$999</span>
+                            <span class="price-old" th:if="${product.oldPrice != null}" th:text="'$' + ${product.oldPrice}"></span>
+                        </div>
+                        <button class="add-to-cart-btn"
+                                th:attr="onclick='addToCart(' + ${product.id} + ', \'' + ${product.name} + '\', ' + ${product.price} + ', \'' + ${product.brand} + '\')'">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BRANDS -->
+<section class="brands-section">
+    <div class="container">
+        <div class="brands-header">Trusted Brands We Carry</div>
+        <div class="brands-scroll">
+            <div class="brand-item">Apple</div>
+            <div class="brand-item">Dell</div>
+            <div class="brand-item">Lenovo</div>
+            <div class="brand-item">ASUS</div>
+            <div class="brand-item">HP</div>
+            <div class="brand-item">Microsoft</div>
+            <div class="brand-item">Acer</div>
+            <div class="brand-item">Razer</div>
+            <div class="brand-item">Logitech</div>
+            <div class="brand-item">Samsung</div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY MABENTECH -->
+<section class="section why-section">
+    <div class="container">
+        <div class="section-header center">
+            <div>
+                <div class="section-eyebrow">Why Choose Us</div>
+                <h2 class="section-title">The MABENTECH Difference</h2>
+            </div>
+        </div>
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-certificate"></i></div>
+                <h3>100% Authentic</h3>
+                <p>Every product is sourced directly from authorized distributors with full warranty.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-globe-americas"></i></div>
+                <h3>Global Delivery</h3>
+                <p>We deliver to 180+ countries with express shipping options available worldwide.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-headset"></i></div>
+                <h3>24/7 Expert Support</h3>
+                <p>Our certified tech experts are available around the clock to help you choose and support.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-lock"></i></div>
+                <h3>Secure Checkout</h3>
+                <p>AES-256 encryption, JWT-secured APIs, and multiple trusted payment gateways.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-undo-alt"></i></div>
+                <h3>30-Day Returns</h3>
+                <p>Hassle-free returns within 30 days. No questions asked on unopened items.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fas fa-tools"></i></div>
+                <h3>2-Year Warranty</h3>
+                <p>Extended warranty coverage on all laptops — plus optional premium protection plans.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+    <div class="container">
+        <div class="newsletter-card">
+            <div class="newsletter-glow"></div>
+            <div class="newsletter-content">
+                <div class="newsletter-icon"><i class="fas fa-satellite-dish"></i></div>
+                <h2>Stay Ahead of Tech</h2>
+                <p>Get exclusive deals, new arrivals, and tech news delivered to your inbox. Join 50,000+ subscribers.</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" placeholder="Enter your email address" required/>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+                <p class="newsletter-note"><i class="fas fa-shield-alt"></i> No spam, unsubscribe anytime.</p>
+            </div>
+        </div>
+    </div>
+</section>
+</th:block>
+<th:block th:fragment="extra-scripts"></th:block>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(content=~{::main-content}, extraHead=~{::extra-head}, extraScripts=~{::extra-scripts})}">
+<head><th:block th:fragment="extra-head"><title>Error – MABENTECH</title></th:block></head>
+<body>
+<th:block th:fragment="main-content">
+<div style="min-height:70vh;display:flex;align-items:center;justify-content:center;padding:4rem 1.5rem;text-align:center">
+    <div style="max-width:500px">
+        <div style="font-size:6rem;margin-bottom:1rem;font-family:var(--font-display);font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent" th:text="${status ?: '404'}">404</div>
+        <h1 style="font-size:1.8rem;margin-bottom:.75rem" th:text="${status == 403 ? 'Access Denied' : status == 500 ? 'Server Error' : 'Page Not Found'}">Page Not Found</h1>
+        <p style="color:var(--text2);margin-bottom:2rem;line-height:1.7"
+           th:text="${status == 403 ? 'You don\'t have permission to access this page.' : status == 500 ? 'Something went wrong on our end. Our team has been notified.' : 'The page you\'re looking for doesn\'t exist or has been moved.'}">
+            The page you're looking for doesn't exist.
+        </p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+            <a href="/" class="btn btn-primary"><i class="fas fa-home"></i> Back to Home</a>
+            <a href="/shop" class="btn btn-outline"><i class="fas fa-laptop"></i> Shop Laptops</a>
+        </div>
+    </div>
+</div>
+</th:block>
+<th:block th:fragment="extra-scripts"></th:block>
+</body>
+</html>

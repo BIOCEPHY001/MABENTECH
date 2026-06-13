@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(content=~{::main-content}, extraHead=~{::extra-head}, extraScripts=~{::extra-scripts})}">
+<head><th:block th:fragment="extra-head"><title>Contact Us – MABENTECH</title></th:block></head>
+<body>
+<th:block th:fragment="main-content">
+
+<div class="page-header">
+    <div class="page-header-inner">
+        <div class="breadcrumb"><a href="/">Home</a><span class="breadcrumb-sep">›</span><span>Contact</span></div>
+        <h1>Contact Us</h1>
+    </div>
+</div>
+
+<div class="contact-layout">
+    <!-- INFO -->
+    <div class="contact-info">
+        <div class="section-eyebrow">Get In Touch</div>
+        <h2>We're Here to Help</h2>
+        <p>Our global support team is available 24/7. Whether you need help choosing a laptop, tracking an order, or resolving an issue — we've got you covered.</p>
+
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div class="contact-text">
+                <strong>Email Support</strong>
+                <span>support@mabentech.com</span>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-headset"></i></div>
+            <div class="contact-text">
+                <strong>Live Chat</strong>
+                <span>Available 24/7 on our website</span>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+            <div class="contact-text">
+                <strong>Phone (Business Hours)</strong>
+                <span>+1 (800) MABENTECH</span>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="contact-text">
+                <strong>Global HQ</strong>
+                <span>San Francisco, CA, USA</span>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-clock"></i></div>
+            <div class="contact-text">
+                <strong>Response Time</strong>
+                <span>Typically within 2 hours</span>
+            </div>
+        </div>
+
+        <!-- Support offices -->
+        <div style="margin-top:2rem;padding:1.25rem;background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--radius-lg)">
+            <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:.75rem">Regional Offices</div>
+            <div style="display:flex;flex-direction:column;gap:.5rem">
+                <div style="font-size:.85rem;color:var(--text2);display:flex;align-items:center;gap:.5rem">
+                    <span>🇺🇸</span> San Francisco — Americas HQ
+                </div>
+                <div style="font-size:.85rem;color:var(--text2);display:flex;align-items:center;gap:.5rem">
+                    <span>🇬🇧</span> London — EMEA HQ
+                </div>
+                <div style="font-size:.85rem;color:var(--text2);display:flex;align-items:center;gap:.5rem">
+                    <span>🇸🇬</span> Singapore — APAC HQ
+                </div>
+                <div style="font-size:.85rem;color:var(--text2);display:flex;align-items:center;gap:.5rem">
+                    <span>🇳🇬</span> Lagos — Africa HQ
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="contact-form-card">
+        <h3 style="margin-bottom:.4rem;font-size:1.2rem">Send Us a Message</h3>
+        <p style="color:var(--text2);font-size:.875rem;margin-bottom:1.5rem">Fill out the form and we'll respond within 24 hours.</p>
+
+        <div id="formSuccess" class="alert alert-success" style="display:none">
+            <i class="fas fa-check-circle"></i> Message sent! We'll be in touch within 24 hours.
+        </div>
+
+        <form id="contactForm" onsubmit="submitContact(event)">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+                <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input class="form-input" type="text" placeholder="John" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <input class="form-input" type="text" placeholder="Doe" required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input class="form-input" type="email" placeholder="you@example.com" required/>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Subject</label>
+                <select class="form-input">
+                    <option value="">Select a topic</option>
+                    <option>Product Enquiry</option>
+                    <option>Order Tracking</option>
+                    <option>Returns & Refunds</option>
+                    <option>Technical Support</option>
+                    <option>Warranty Claim</option>
+                    <option>Bulk / Business Order</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Order Number (optional)</label>
+                <input class="form-input" type="text" placeholder="MBT-1234567890"/>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Message</label>
+                <textarea class="form-input" rows="5" placeholder="Tell us how we can help..." required
+                          style="resize:vertical;min-height:120px"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+                <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+        </form>
+    </div>
+</div>
+
+</th:block>
+<th:block th:fragment="extra-scripts">
+<script>
+function submitContact(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type=submit]');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    btn.disabled = true;
+    setTimeout(() => {
+        document.getElementById('formSuccess').style.display = 'flex';
+        e.target.reset();
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+        btn.disabled = false;
+        e.target.scrollIntoView({ behavior: 'smooth' });
+    }, 1200);
+}
+</script>
+</th:block>
+</body>
+</html>
